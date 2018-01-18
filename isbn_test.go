@@ -113,8 +113,22 @@ func TestISBN(t *testing.T) {
 				t.Errorf("Incorrect parsed: %s", v.isbn10)
 			}
 			if err13 == nil {
+
 				t.Errorf("Incorrect parsed: %s", v.isbn13)
 			}
 		}
 	}
+}
+
+// from amazon https://www.amazon.co.uk/PIM-979-ISBN-13-Test/dp/B0019RL99E
+const test979isbn = `979-5000000235`
+
+func TestISBN13_979_Prefix(t *testing.T) {
+	n, err := Parse(test979isbn)
+	if err != nil {
+		t.Errorf("Failed to parse 979-prefix ISBN-13 `%s`, error: %s", test979isbn, err)
+		return
+	}
+	// it should conserve the prefix.
+	checkStringEqual(t, "Conversion of ISBN-13 To10() and back should be lossless", n.String(), n.To10().To13().String())
 }
