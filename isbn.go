@@ -2,7 +2,6 @@ package isbn
 
 import (
 	"fmt"
-	"log"
 	"strings"
 )
 
@@ -53,7 +52,6 @@ func Validate(s string) bool {
 // expect for the optional prefix `urn:isbn:`
 func Parse(s string) (*ISBN, error) {
 	if strings.HasPrefix(s, urnPrefix) {
-		log.Println("stripping prefix", s, s[len(urnPrefix):])
 		s = s[len(urnPrefix):]
 	}
 	// now strip unwanted characters.
@@ -68,7 +66,6 @@ func Parse(s string) (*ISBN, error) {
 	// now it should be either 10 or 13 digits
 	is13 := len(m) == 13
 	if len(m) != 10 && !is13 {
-		log.Println("bad digits", len(m))
 		return nil, fmt.Errorf("Invalid ISBN digit count")
 	}
 	// if 13, check prefix is 978
