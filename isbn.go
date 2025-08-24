@@ -3,7 +3,6 @@ package isbn
 import (
 	"bytes"
 	"fmt"
-	"log"
 	"strings"
 )
 
@@ -79,7 +78,6 @@ func Parse(s string) (*ISBN, error) {
 		if !isAllowedPrefix(parsed.prefix) {
 			return nil, fmt.Errorf("Unexpected ISBN-13 prefix: %s", s[0:3])
 		}
-		log.Printf("ISBN-13 Prefix: %v\n", parsed.prefix)
 		offset = 3
 	}
 
@@ -176,7 +174,6 @@ func (n *ISBN) To13() *ISBN {
 	if !isAllowedPrefix(prefix) {
 		prefix = [3]byte{0, 0, 0}
 		copy(prefix[:], allowedISBN13Prefixes[0])
-		log.Println("to13 prefix:", prefix)
 	}
 	return &ISBN{
 		is13:     true,
